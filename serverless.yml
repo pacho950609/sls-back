@@ -1,0 +1,35 @@
+service: graphql-back
+
+custom: ${file(resources/config/custom.yml):custom}
+plugins:
+  - serverless-offline-lambda
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage,'local'}
+  iamRoleStatements: ${file(resources/config/iamRole.yml):iamRoleStatements}
+  environment: ${file(resources/config/env.yml):environment}
+
+functions:
+  signup:
+    handler: lib/handlers/auth/auth-handler.signUpHandler
+    events:
+      - http:
+          method: post
+          path: signup
+          cors: true
+  login:
+    handler: lib/handlers/auth/auth-handler.loginHandler
+    events:
+      - http:
+          method: post
+          path: login
+          cors: true
+
+package:
+  excludeDevDependencies: true
+
+
+

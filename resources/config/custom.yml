@@ -1,0 +1,11 @@
+custom:
+  dbName:
+    else: potter
+  dbUsername:
+    else: postgres
+  dbPassword:
+    else: postgres
+  dbUrl:
+    else: localhost
+  hashKey:
+    else: password
