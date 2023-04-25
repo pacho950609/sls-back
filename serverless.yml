@@ -9,6 +9,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage,'local'}
+  region: us-east-1
   iamRoleStatements: ${file(resources/config/iamRole.yml):iamRoleStatements}
   environment: ${file(resources/config/env.yml):environment}
 

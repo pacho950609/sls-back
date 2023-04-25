@@ -1,11 +1,5 @@
 custom:
-  dbName:
-    else: potter
-  dbUsername:
-    else: postgres
-  dbPassword:
-    else: postgres
-  dbUrl:
-    else: localhost
+  DB_KEYS:
+    prod: ${ssm(${self:provider.region}):/aws/reference/secretsmanager/DB}
   hashKey:
     else: password
