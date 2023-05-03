@@ -16,3 +16,6 @@ awscli-bundle/
 .vscode/*
 !.vscode/launch.json
 .idea/
+
+#docs
+public/

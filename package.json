@@ -10,7 +10,8 @@
     "build": "babel src --out-dir lib --extensions \".ts,.tsx\" --copy-files --source-maps inline",
     "lint": "eslint 'src/**' --ext ts --fix --quiet && npm run build:types",
     "deploy": "npm run build && sls deploy --stage prod",
-    "build:types": "tsc --emitDeclarationOnly"
+    "build:types": "tsc --emitDeclarationOnly",
+    "create-doc": "npx apidoc -i ./src -o ./public -d -q"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.2",

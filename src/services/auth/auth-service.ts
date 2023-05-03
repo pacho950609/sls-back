@@ -4,7 +4,7 @@ import { EntityManager } from 'typeorm';
 import { User } from 'entities/User';
 import { hash } from '../../utils/encryption';
 
-const { HASH_KEY } = process.env
+const { HASH_KEY } = process.env;
 
 /**
  * Validate if it's a valid token
