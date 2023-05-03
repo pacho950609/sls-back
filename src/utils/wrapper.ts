@@ -66,7 +66,7 @@ export const handlerWrapper = (
     handlerEvent.queryStringParameters = event.queryStringParameters;
 
     if (event.body) {
-        handlerEvent.body = JSON.parse(event.body);
+        handlerEvent.body = event.body ? JSON.parse(event.body) : {};
         if (optionsParam.validateBody) {
             const { error } = optionsParam.validateBody.validate(handlerEvent.body);
             if (error) {
@@ -76,14 +76,14 @@ export const handlerWrapper = (
     }
 
     if (optionsParam.validatePathParameters) {
-        const { error } = optionsParam.validatePathParameters.validate(handlerEvent.pathParameters);
+        const { error } = optionsParam.validatePathParameters.validate(handlerEvent.pathParameters ?? {});
         if (error) {
             return errorResponse(error.message, 400);
         }
     }
 
     if (optionsParam.validateQueryStringParameters) {
-        const { error } = optionsParam.validateQueryStringParameters.validate(handlerEvent.queryStringParameters);
+        const { error } = optionsParam.validateQueryStringParameters.validate(handlerEvent.queryStringParameters ?? {});
         if (error) {
             return errorResponse(error.message, 400);
         }
