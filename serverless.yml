@@ -28,6 +28,14 @@ functions:
           method: post
           path: login
           cors: true
+  processMessage:
+    handler: lib/handlers/auth/auth-handler.messageHandler
+    events:
+      - sqs: 'arn:aws:sqs:us-east-1:267965871015:potter-queue'
+  processEvent:
+    handler: lib/handlers/auth/auth-handler.eventHandler
+    events:
+      - sns: 'arn:aws:sns:us-east-1:267965871015:potter-topic'
 
 package:
   excludeDevDependencies: true

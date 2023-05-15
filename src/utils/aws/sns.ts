@@ -1,3 +1,4 @@
+import * as lambda from 'aws-lambda';
 import SNS from 'aws-sdk/clients/sns';
 
 const sns = new SNS();
@@ -22,4 +23,11 @@ export const sendTopicEvent = async <T extends Topics>(topic: T, message: TopicI
             Message: JSON.stringify(message),
         })
         .promise();
+};
+
+/**
+ * Parse and type a SNS message
+ */
+export const parseTopicEvent = <T extends Topics>(eventType: T, event: lambda.SNSEvent): TopicI[T] => {
+    return JSON.parse(event.Records[0]?.Sns?.Message) as TopicI[T];
 };

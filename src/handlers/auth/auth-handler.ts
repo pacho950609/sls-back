@@ -1,6 +1,9 @@
 import J from 'joi';
+import * as lambda from 'aws-lambda';
 import { handlerWrapper } from 'utils/wrapper';
 import { signUp, login } from '../../services/auth/auth-service';
+import { parseTopicEvent, Topics } from '../../utils/aws/sns'
+import { parseQueueMessage, Queues } from '../../utils/aws/sqs';
 
 /**
  * @api {post} /signup Create user
@@ -69,3 +72,13 @@ export const loginHandler = handlerWrapper(
         return { token };
     },
 );
+
+export const messageHandler = (lambdaEvent: lambda.SQSEvent) => {
+    const message = parseQueueMessage(Queues.POTTER_QUEUE, lambdaEvent);
+    console.log('message', message, message.id);
+}
+
+export const eventHandler = (lambdaEvent: lambda.SNSEvent) => {
+    const event = parseTopicEvent(Topics.POTTER_TOPIC, lambdaEvent);
+    console.log('event', event, event.id);
+}
