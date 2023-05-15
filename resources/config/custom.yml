@@ -1,5 +1,5 @@
 custom:
   DB_KEYS:
-    prod: ${ssm(${self:provider.region}):/aws/reference/secretsmanager/DB}
+    prod: ${ssm(${self:provider.region}):/aws/reference/secretsmanager/db}
   hashKey:
     else: password
