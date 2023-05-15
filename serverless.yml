@@ -1,4 +1,4 @@
-service: graphql-back
+service: potter-back
 
 custom: ${file(resources/config/custom.yml):custom}
 plugins:

@@ -2,5 +2,7 @@ iamRoleStatements:
   - Effect: "Allow"
     Action:
       - "s3:*"
+      - "sqs:*"
+      - "sns:*"
     Resource:
       - "*"

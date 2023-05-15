@@ -12,14 +12,13 @@ export interface TopicI {
 
 /**
  * Send a event to a topic
- * @param eventType 
+ * @param topic 
  * @param message 
  */
-export const sendTopicEvent = async <T extends Topics>(eventType: T, message: TopicI[T]) => {
-    const arn = `arn:aws:sns:us-east-1:400557621329:${process.env.PROJECT}-${eventType}`;
+export const sendTopicEvent = async <T extends Topics>(topic: T, message: TopicI[T]) => {
     await sns
         .publish({
-            TopicArn: arn,
+            TopicArn: topic,
             Message: JSON.stringify(message),
         })
         .promise();
