@@ -28,6 +28,13 @@ functions:
           method: post
           path: login
           cors: true
+  processFile:
+    handler: lib/handlers/auth/auth-handler.fileHandler
+    events:
+      - http:
+          method: post
+          path: file
+          cors: true
   processMessage:
     handler: lib/handlers/auth/auth-handler.messageHandler
     events:

@@ -1,4 +1,5 @@
 import * as lambda from 'aws-lambda';
+import * as multipart from 'aws-lambda-multipart-parser';
 import Joi from 'joi';
 import { Connection, EntityManager } from 'typeorm';
 import { Database } from 'db/Database';
@@ -10,6 +11,7 @@ export interface HandlerWrapperOptions {
     validateBody: Joi.ObjectSchema<any>;
     validatePathParameters: Joi.ObjectSchema<any>;
     validateQueryStringParameters: Joi.ObjectSchema<any>;
+    isFormData: boolean;
 }
 
 export const successfulResponse = (body: object, statusCode = 200): lambda.APIGatewayProxyResult => {
@@ -66,11 +68,15 @@ export const handlerWrapper = (
     handlerEvent.queryStringParameters = event.queryStringParameters;
 
     if (event.body) {
-        handlerEvent.body = event.body ? JSON.parse(event.body) : {};
-        if (optionsParam.validateBody) {
-            const { error } = optionsParam.validateBody.validate(handlerEvent.body);
-            if (error) {
-                return errorResponse(error.message, 400);
+        if(optionsParam.isFormData) {
+            handlerEvent.body = event.body?  multipart.parse(event) : {}
+        } else {
+            handlerEvent.body = event.body ? JSON.parse(event.body) : {};
+            if (optionsParam.validateBody) {
+                const { error } = optionsParam.validateBody.validate(handlerEvent.body);
+                if (error) {
+                    return errorResponse(error.message, 400);
+                }
             }
         }
     }

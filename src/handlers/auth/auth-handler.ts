@@ -4,6 +4,7 @@ import { handlerWrapper } from 'utils/wrapper';
 import { signUp, login } from '../../services/auth/auth-service';
 import { parseTopicEvent, Topics } from '../../utils/aws/sns'
 import { parseQueueMessage, Queues } from '../../utils/aws/sqs';
+import papa from 'papaparse';
 
 /**
  * @api {post} /signup Create user
@@ -82,3 +83,14 @@ export const eventHandler = (lambdaEvent: lambda.SNSEvent) => {
     const event = parseTopicEvent(Topics.POTTER_TOPIC, lambdaEvent);
     console.log('event', event, event.id);
 }
+
+export const fileHandler = handlerWrapper(
+    {
+        cors: true,
+        isFormData: true,
+    },
+    async (event, manager) => {
+        const data = papa.parse(event?.body.file.content, { header: true }).data
+        return { msg: 'ok', data}
+    },
+);
