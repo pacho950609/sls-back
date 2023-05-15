@@ -6,6 +6,7 @@ const s3 = new S3();
 
 export enum Buckets {
     POTTER = 'potter-files',
+    POTTER_PUBLIC = 'potter-public-files',
 }
 
 /**
